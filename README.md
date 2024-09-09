@@ -39,6 +39,75 @@ YOY Growth in Cars Sold: Highlighted the annual change in the number of cars sol
 3. Geographical Distribution: A map chart showcased YTD sales data by dealer region, helping identify top-performing areas and potential market expansion opportunities.
 4. Company-Wise Sales Trend: A grid displayed sales trends for each car company, comparing YTD sales figures and providing insights into brand performance.
 
+## DAX Commands Used : 
+
+### 1. Calendar Table :
+
+Date Table = CALENDAR(MIN(carsalesdata[Date]), MAX(carsalesdata[Date]))
+
+Year = YEAR('Date Table'[Date])
+
+Month = FORMAT('Date Table'[Date], "MMMM")
+
+Week = WEEKNUM('Date Table'[Date])
+
+### 2. Key Performance Indicators (KPIs) :
+
+YTD Total_Sales = TOTALYTD(SUM(carsalesdata[Price ($)]), 'Date Table'[Date])
+
+PYTD Total_Sales = CALCULATE(SUM(carsalesdata[Price ($)]), SAMEPERIODLASTYEAR('Date Table'[Date]))
+
+Sales Difference = [YTD Total_Sales] - [PYTD Total_Sales]
+
+Sales Diff Colour = IF([Sales Difference] > 0, "Green", "Red")
+
+YOY Sales Growth = [Sales Difference] / [PYTD Total_Sales]
+
+MTD Total_Sales = TOTALMTD(SUM(carsalesdata[Price ($)]), 'Date Table'[Date])
+
+MTD KPI = CONCATENATE("MTD Total Sales: ", FORMAT([MTD Total_Sales]/1000000, "$0.00M"))
+
+### 3. Average Price Analysis :
+
+Avg Price = SUM(carsalesdata[Price ($)]) / COUNT(carsalesdata[Car_id])
+
+YTD AVG Price = TOTALYTD([Avg Price], 'Date Table'[Date])
+
+PYTD AVG Price = CALCULATE([Avg Price], SAMEPERIODLASTYEAR('Date Table'[Date]))
+
+AVG Price Difference = [YTD AVG Price] - [PYTD AVG Price]
+
+AVG Price Colour = IF([AVG Price Difference] > 0, "Green", "Red")
+
+YOY AVG Price Growth = [AVG Price Difference] / [PYTD AVG Price]
+
+MTD AVG Price = TOTALMTD([Avg Price], 'Date Table'[Date])
+
+MTD AVG Price KPI = CONCATENATE("MTD AVG Price: ", FORMAT([MTD AVG Price]/1000, "$0.00K"))
+
+### 4. Car Sold Metrics :
+
+YTD Cars Sold = TOTALYTD(COUNT(carsalesdata[Car_id]), 'Date Table'[Date])
+
+PYTD Cars Sold = CALCULATE(COUNT(carsalesdata[Car_id]), SAMEPERIODLASTYEAR('Date Table'[Date]))
+
+Cars Sold Difference = [YTD Cars Sold] - [PYTD Cars Sold]
+
+Cars Sold Colour = IF([Cars Sold Difference] > 0, "Green", "Red")
+
+YOY Cars Sold Growth = [Cars Sold Difference] / [PYTD Cars Sold]
+
+MTD Cars Sold = TOTALMTD(COUNT(carsalesdata[Car_id]), 'Date Table'[Date])
+
+MTD Cars Sold KPI = CONCATENATE("MTD Cars Sold: ", FORMAT([MTD Cars Sold]/1000, "0.00"))
+
+### 5. Additional Calculations for Visualizations :
+
+Total Sales = SUM(carsalesdata[Price ($)])
+
+Max Point = IF(MAXX(ALLSELECTED('Date Table'[Week]), [Total Sales]) = [Total Sales], MAXX(ALLSELECTED('Date Table'[Week]), [Total Sales]), BLANK())
+
+
 ## Quantified Results:
 
 Achieved a 23.59% increase in YTD sales compared to the previous year, reaching $371.2M.
@@ -48,3 +117,10 @@ Pinpointed regions with the highest sales growth, aiding in targeted marketing a
 ## Conclusion: 
 The Power BI dashboard effectively transformed raw sales data into actionable insights, enabling better decision-making across the sales, marketing, and inventory management teams. The interactive visualizations provided clear and concise information that helped the business track performance, understand market dynamics, and optimize strategies.
 
+## Dashboards : 
+
+<img width="1362" alt="page 1 " src="https://github.com/user-attachments/assets/fdb44fba-4dad-46d8-a31d-7b2e8f5d49cd">
+
+<img width="1363" alt="page 2 " src="https://github.com/user-attachments/assets/148f451b-f56e-4443-8f0a-d6170cb37705">
+
+## Link : https://app.powerbi.com/reportEmbed?reportId=e5e61871-92c0-43bd-9aa7-7095d11b2a89&autoAuth=true&ctid=4278a402-1a9e-4eb9-8414-ffb55a5fcf1e
